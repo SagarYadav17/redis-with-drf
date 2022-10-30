@@ -25,8 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "rest_framework",
-    "test_app",
+    "rest_framework",  # For Django REST Framework
+    "core",  # For core application
 ]
 
 MIDDLEWARE = [
@@ -113,13 +113,14 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
+# Connect to redis server for cache backend
+# LINK - https://github.com/jazzband/django-redis#configure-as-cache-backend
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://localhost:6379/1",  # Local Link provided by the redis-server command
+        "LOCATION": "redis://localhost:6379/1",
     }
 }
-
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
