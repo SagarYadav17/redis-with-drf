@@ -16,7 +16,7 @@ SECRET_KEY = "django-insecure-d%pr25aup#3i#xomwmi(022k73e=i)(5l0_nmd3d9o7wlez%$6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -128,3 +128,7 @@ CACHES = {
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.sagaryadav.dev",
+]

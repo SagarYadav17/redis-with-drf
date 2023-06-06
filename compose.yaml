@@ -24,26 +24,25 @@ services:
       - 6379:6379
     restart: always
 
-  pihole:
-    image: pihole/pihole
-    environment:
-      - TZ=Asia/Kolkata # Set your desired timezone
-      - WEBPASSWORD=admin # Set your desired Pi-hole web interface password
-      - DNS1=1.1.1.1 # Set your desired DNS servers
-      - DNS2=1.0.0.1
+  adguard:
+    image: adguard/adguardhome:latest
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp"
-      - "8082:80" # Expose Pi-hole web interface on port 8082
+      - "1234:53/tcp"
+      - "1234:53/udp"
+      - "6767:67/udp"
+      - "6868:68/udp"
+      - "853:853/tcp"
+      - "3000:3000"
     volumes:
-      - "./pihole/pihole:/etc/pihole"
-      - "./pihole/dnsmasq.d:/etc/dnsmasq.d"
+      - "./adguard/work:/opt/adguardhome/work"
+      - "./adguard/conf:/opt/adguardhome/conf"
+      - "./adguard/logs:/opt/adguardhome/logs"
+    restart: always
 
   traefik:
     image: traefik:latest
     command:
-      - "--configFile=/etc/traefik/traefik.yml" # Path to your traefik.yml file
+      - "--configFile=/etc/traefeik/traefik.yml" # Path to your traefik.yml file
     ports:
       - "80:80" # Expose port 80 for HTTP challenges
       - "443:443" # Expose port 443 for HTTPS traffic
