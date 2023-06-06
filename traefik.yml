@@ -1,0 +1,30 @@
+api:
+  insecure: true # Enable insecure API (not recommended for production)
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+
+entryPoints:
+  web:
+    address: ":80" # Listen on port 80
+  websecure:
+    address: ":443" # Listen on port 443
+
+log:
+  level: INFO
+
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+
+serversTransport:
+  insecureSkipVerify: true # Skip SSL verification for backend servers
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: sy938822@gmail.com # Set your email address for Let's Encrypt notifications
+      storage: /etc/letsencrypt/acme.json
+      httpChallenge:
+        entryPoint: web
