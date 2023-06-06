@@ -27,16 +27,29 @@ services:
   adguard:
     image: adguard/adguardhome:latest
     ports:
-      - "1234:53/tcp"
-      - "1234:53/udp"
-      - "6767:67/udp"
-      - "6868:68/udp"
+      - "54:53/tcp" # Change from 53 to 54
+      - "54:53/udp" # Change from 53 to 54
+      - "67:67/udp"
+      - "8082:80/tcp" # Change from 80 to 8082
+      - "8443:443/tcp" # Change from 443 to 8443
+      - "3000:3000/tcp"
       - "853:853/tcp"
-      - "3000:3000"
+      - "784:784/udp"
+      - "853:853/udp"
+      - "8853:8853/udp"
+      - "5443:5443/tcp"
+      - "5443:5443/udp"
     volumes:
       - "./adguard/work:/opt/adguardhome/work"
       - "./adguard/conf:/opt/adguardhome/conf"
       - "./adguard/logs:/opt/adguardhome/logs"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adguard.rule=Host(`adguard.sagaryadav.dev`)" # Replace with your domain
+      - "traefik.http.routers.adguard.entrypoints=websecure"
+      - "traefik.http.routers.adguard.tls=true"
+      - "traefik.http.routers.adguard.tls.certresolver=myresolver"
+      - "traefik.http.services.adguard.loadbalancer.server.port=3000"
     restart: always
 
   traefik:
