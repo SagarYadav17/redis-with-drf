@@ -1,7 +1,10 @@
 from pathlib import Path
+from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+REDIS_HOST = environ.get("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = environ.get("REDIS_PORT", 6379)
 
 
 # Quick-start development settings - unsuitable for production
@@ -118,7 +121,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://localhost:6379/1",
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}/",
     }
 }
 
